@@ -1,10 +1,6 @@
+// Meta elements?
+
 public interface Set {
-
-    // Manipulate contents
-
-    public abstract void add(Object element);
-    public abstract void remove(Object element);
-    public abstract void replaceSet(Set set);
 
     // Get information
 
@@ -16,9 +12,11 @@ public interface Set {
     // Construct new sets
 
     public abstract Set getUnion(Set set);
+    public abstract Set getUnion(Object elementInSet);
     public abstract Set getIntersection(Set set);
     public abstract Set getSetDifference(Set set);
-
+    public abstract Set getSetDifference(Object elementInSet);
+    
     // Misc
 
     public abstract Object[] toArray();
