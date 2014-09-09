@@ -1,5 +1,3 @@
-// Set that uses array for its implementation
-
 public class ArraySet implements Set {
 
     Object[] elements;
