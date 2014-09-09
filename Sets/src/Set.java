@@ -17,7 +17,7 @@ public interface Set {
 
     public abstract Set getUnion(Set set);
     public abstract Set getIntersection(Set set);
-    public abstract Set getSetDifference(Set sebB);
+    public abstract Set getSetDifference(Set set);
 
     // Misc
 
