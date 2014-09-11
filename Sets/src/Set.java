@@ -16,7 +16,7 @@ public interface Set {
     public abstract Set getIntersection(Set set);
     public abstract Set getSetDifference(Set set);
     public abstract Set getSetDifference(Object elementInSet);
-    
+
     // Misc
 
     public abstract Object[] toArray();

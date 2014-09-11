@@ -24,19 +24,6 @@ public class ArraySet implements Set {
 
     // Manipulate contents
 
-    public void add(Object element) {
-        Object[] newElement = { element };
-        elements = ArrayHelpers.combinedAndDuplicatesRemoved(elements, newElement);
-    }
-
-    public void remove(Object element) {
-        elements = ArrayHelpers.objectRemoved(elements, element);
-    }
-
-    public void replaceSet(Set set) {
-        elements = set.toArray();
-    }
-
 
     // Queries about the set
 
@@ -64,11 +51,14 @@ public class ArraySet implements Set {
         return false;
     }
 
-
     // Collection stuff
 
     public Set getUnion(Set set) {
-        return new ArraySet(ArrayHelpers.combinedAndDuplicatesRemoved(this.toArray(), set.toArray()));
+        return new ArraySet( ArrayHelpers.combinedAndDuplicatesRemoved( this.toArray(), set.toArray() ) );
+    }
+
+    public Set getUnion(Object element) {
+        return getUnion( new ArraySet(new Object[]{ element }) );
     }
 
     public Set getIntersection(Set set) {
@@ -89,6 +79,10 @@ public class ArraySet implements Set {
             }
         }
         return new ArraySet(ArrayHelpers.removeNulls(result));
+    }
+
+    public Set getSetDifference(Object element) {
+        return getSetDifference( new ArraySet(new Object[]{ element }) );
     }
 
     public Object[] toArray() {
