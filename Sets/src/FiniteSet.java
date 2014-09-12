@@ -1,21 +1,21 @@
-public class ArraySet implements Set {
+public class FiniteSet implements Set {
 
     Object[] elements;
 
-    public ArraySet() {
+    public FiniteSet() {
         elements = new Object[0];
     }
 
-    public ArraySet(Set set) {
+    public FiniteSet(Set set) {
         elements = set.toArray();
     }
 
-    public ArraySet(Object[] _elements) {
+    public FiniteSet(Object[] _elements) {
         elements = ArrayHelpers.duplicatesRemoved(_elements);
     }
 
     public String toString() {
-        String s = "ArraySet. Items: \n";
+        String s = "FiniteSet. Items: \n";
         for (Object o : elements) {
             s += o.toString() + "\n";
         }
@@ -54,11 +54,11 @@ public class ArraySet implements Set {
     // Collection stuff
 
     public Set getUnion(Set set) {
-        return new ArraySet( ArrayHelpers.combinedAndDuplicatesRemoved( this.toArray(), set.toArray() ) );
+        return new FiniteSet( ArrayHelpers.combinedAndDuplicatesRemoved( this.toArray(), set.toArray() ) );
     }
 
     public Set getUnion(Object element) {
-        return getUnion( new ArraySet(new Object[]{ element }) );
+        return getUnion( new FiniteSet(new Object[]{ element }) );
     }
 
     public Set getIntersection(Set set) {
@@ -68,7 +68,7 @@ public class ArraySet implements Set {
                 result[i] = null;
             }
         }
-        return new ArraySet(ArrayHelpers.removeNulls(result));
+        return new FiniteSet(ArrayHelpers.removeNulls(result));
     }
 
     public Set getSetDifference(Set set) {
@@ -78,11 +78,11 @@ public class ArraySet implements Set {
                 result[i] = null;
             }
         }
-        return new ArraySet(ArrayHelpers.removeNulls(result));
+        return new FiniteSet(ArrayHelpers.removeNulls(result));
     }
 
     public Set getSetDifference(Object element) {
-        return getSetDifference( new ArraySet(new Object[]{ element }) );
+        return getSetDifference( new FiniteSet(new Object[]{ element }) );
     }
 
     public Object[] toArray() {
