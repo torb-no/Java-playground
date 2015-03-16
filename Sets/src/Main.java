@@ -10,6 +10,12 @@ public class Main {
         FiniteSet setAB = new FiniteSet(setA.getUnion(setB));
         setAB.print();
 
+        UnionSet setAunionB = new UnionSet(setA, setB);
+        setAunionB.print();
+
+        UnionSet setAunionAB = new UnionSet(setA, setAunionB);
+        setAunionAB.print();
+
         FiniteSet setAiB = new FiniteSet(setA.getIntersection(setB));
         setAiB.print();
 

@@ -1,4 +1,4 @@
-public class FiniteSet implements Set {
+public class FiniteSet extends Set {
 
     Object[] elements;
 
@@ -6,7 +6,7 @@ public class FiniteSet implements Set {
         elements = new Object[0];
     }
 
-    public FiniteSet(Set set) {
+    public FiniteSet(FiniteSet set) {
         elements = set.toArray();
     }
 
@@ -15,10 +15,12 @@ public class FiniteSet implements Set {
     }
 
     public String toString() {
-        String s = "FiniteSet. Items: \n";
-        for (Object o : elements) {
-            s += o.toString() + "\n";
+        String s = "( ";
+        for (int i = 0; i<elements.length; i++) {
+            s += elements[i].toString();
+            if (i != elements.length-1) { s += ", "; }
         }
+        s += " )";
         return s;
     }
 
@@ -28,11 +30,7 @@ public class FiniteSet implements Set {
     // Queries about the set
 
     public Boolean empty() {
-        return this.elements.length == 0;
-    }
-
-    public Boolean equals(Set set) {
-        return isSubsetOf(set) && set.isSubsetOf(this);
+        return elements.length == 0;
     }
 
     public Boolean isSubsetOf(Set set) {
@@ -51,17 +49,21 @@ public class FiniteSet implements Set {
         return false;
     }
 
+    public Boolean finite() {
+        return true;
+    }
+
     // Collection stuff
 
-    public Set getUnion(Set set) {
+    public FiniteSet getUnion(FiniteSet set) {
         return new FiniteSet( ArrayHelpers.combinedAndDuplicatesRemoved( this.toArray(), set.toArray() ) );
     }
 
-    public Set getUnion(Object element) {
+    public FiniteSet getUnion(Object element) {
         return getUnion( new FiniteSet(new Object[]{ element }) );
     }
 
-    public Set getIntersection(Set set) {
+    public FiniteSet getIntersection(FiniteSet set) {
         Object[] result = this.toArray();
         for (int i = 0; i<result.length; i++) {
             if (!set.containsElement(result[i])) {
@@ -71,7 +73,7 @@ public class FiniteSet implements Set {
         return new FiniteSet(ArrayHelpers.removeNulls(result));
     }
 
-    public Set getSetDifference(Set set) {
+    public FiniteSet getSetDifference(FiniteSet set) {
         Object[] result = this.toArray();
         for (int i = 0; i<result.length; i++) {
             if (set.containsElement(result[i])) {
@@ -81,7 +83,7 @@ public class FiniteSet implements Set {
         return new FiniteSet(ArrayHelpers.removeNulls(result));
     }
 
-    public Set getSetDifference(Object element) {
+    public FiniteSet getSetDifference(Object element) {
         return getSetDifference( new FiniteSet(new Object[]{ element }) );
     }
 
@@ -91,14 +93,6 @@ public class FiniteSet implements Set {
 
     // Debug stuff
 
-    public void printElements() {
-        for (Object obj : elements) {
-            System.out.println(obj);
-        }
-    }
 
-    public void print() {
-        System.out.println(toString());
-    }
 
 }

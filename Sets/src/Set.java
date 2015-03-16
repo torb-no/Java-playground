@@ -1,26 +1,23 @@
 // Meta elements?
 
-public interface Set {
+public abstract class Set {
 
     // Get information
 
     public abstract Boolean empty();
-    public abstract Boolean equals(Set set);
+    public Boolean equals(Set set) {
+        return isSubsetOf(set) && set.isSubsetOf(this);
+    }
     public abstract Boolean isSubsetOf(Set set);
     public abstract Boolean containsElement(Object element);
-
-    // Construct new sets
-
-    public abstract Set getUnion(Set set);
-    public abstract Set getUnion(Object elementInSet);
-    public abstract Set getIntersection(Set set);
-    public abstract Set getSetDifference(Set set);
-    public abstract Set getSetDifference(Object elementInSet);
+    public abstract Boolean finite();
+    public abstract Object[] toArray(); //throw error if invalid
 
     // Misc
-
-    public abstract Object[] toArray();
-    public abstract void printElements();
     public abstract String toString();
+
+    public void print() {
+        System.out.println(toString());
+    }
 
 }
