@@ -18,7 +18,7 @@ public class Monitor {
             }
         }
 
-        System.out.println("MONITOR(MAIN): All threads finished. " +
+        System.out.println("MONITOR(MAIN): All workers finished. " +
                             "smallest number is " + smallestSoFar);
     }
 

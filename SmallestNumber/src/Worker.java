@@ -23,7 +23,7 @@ public class Worker implements Runnable {
             }
         }
 
-        System.out.println(Thread.currentThread().getName() + " found " + smallestSoFar);
+//        System.out.println(Thread.currentThread().getName() + " found " + smallestSoFar);
 
         monitor.threadFinished(smallestSoFar);
     }
