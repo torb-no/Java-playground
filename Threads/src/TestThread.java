@@ -10,7 +10,7 @@ public class TestThread extends Thread {
     public void run() {
         System.out.println(id + " - before");
         if ( id == 2 ) {
-            try { sleep(1000); }
+            try { this.sleep(10000); }
             catch (InterruptedException e) { e.printStackTrace(); }
         }
         System.out.println(id + " - after");
