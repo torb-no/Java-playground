@@ -1,18 +1,16 @@
 
 public class Main {
 
-    final int tableSize = 100000000;
+    final int tableSize = 190000000;
     int[] table = new int[tableSize];
-    int threadCount = 1;
+    int threadCount = 4;
 
     public static void main(String[] args) {
         new Main();
     }
 
     Main() {
-        Monitor m = new Monitor(threadCount);
-        Worker.table = table;
-        Worker.monitor = m;
+        Monitor monitor = new Monitor(threadCount);
 
         System.out.println("Filling table with random numbers...");
         // Fill array with random numbers
@@ -21,12 +19,12 @@ public class Main {
         }
 
         System.out.println("Looking for smallest number in array using " + threadCount + " threads");
-        long beforeNano = System.nanoTime();
+
 
         int intervalSize = tableSize / threadCount;
         int rest = tableSize % threadCount;
 
-
+        Thread[] threads = new Thread[threadCount];
 
         int startIndex = 0;
         for (int i=0; i<threadCount; i++) {
@@ -38,13 +36,17 @@ public class Main {
             }
 
             // Make a  thread
-            new Thread(new Worker(startIndex, endIndex)).start();
+            threads[i] = new Thread(new SmallestNumberWorker(table, monitor, startIndex, endIndex));
 
             startIndex = endIndex + 1;
         }
 
+
+        long beforeNano = System.nanoTime();
+        for (Thread t : threads) t.start();
+
         // Waiting for threads to finnish
-        m.waitForAll();
+        monitor.waitForAll();
 
         long afterNano = System.nanoTime();
         long nanoDelta = afterNano - beforeNano;

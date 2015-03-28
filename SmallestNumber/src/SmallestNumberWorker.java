@@ -1,13 +1,14 @@
-public class Worker implements Runnable {
+public class SmallestNumberWorker implements Runnable {
 
-    // Static because shared across workers
-    static int[] table;
-    static Monitor monitor;
+    private int[] table;
+    private Monitor monitor;
 
     private int startIndex;
     private int endIndex;
 
-    public Worker(int startIndex, int endIndex) {
+    public SmallestNumberWorker(int[] table, Monitor monitor, int startIndex, int endIndex) {
+        this.table = table;
+        this.monitor = monitor;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
     }
