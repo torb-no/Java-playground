@@ -1,25 +1,24 @@
+import java.util.Random;
 
 public class Main {
 
-    final int tableSize = 190000000;
-    int[] table = new int[tableSize];
-    int threadCount = 4;
+    static final int tableSize = 500;
+    static final int bound = Integer.MAX_VALUE;
+    static final int threadCount = 4;
+    static final long seed = 23131;
 
     public static void main(String[] args) {
-        new Main();
-    }
-
-    Main() {
         Monitor monitor = new Monitor(threadCount);
+        int[] table = new int[tableSize];
 
         System.out.println("Filling table with random numbers...");
+        Random random = new Random(seed);
         // Fill array with random numbers
         for (int i=0; i<tableSize; i++) {
-            table[i] = (int) (Math.random() * Integer.MAX_VALUE);
+            table[i] = random.nextInt(bound);
         }
 
-        System.out.println("Looking for smallest number in array using " + threadCount + " threads");
-
+        System.out.println("Looking for primes using " + threadCount + " threads");
 
         int intervalSize = tableSize / threadCount;
         int rest = tableSize % threadCount;
@@ -36,7 +35,7 @@ public class Main {
             }
 
             // Make a  thread
-            threads[i] = new Thread(new SmallestNumberWorker(table, monitor, startIndex, endIndex));
+            threads[i] = new Thread(new Worker(table, monitor, startIndex, endIndex));
 
             startIndex = endIndex + 1;
         }
@@ -46,12 +45,12 @@ public class Main {
         for (Thread t : threads) t.start();
 
         // Waiting for threads to finnish
-        monitor.waitForAll();
-
+        int result = monitor.getResultsWhenFinished();
         long afterNano = System.nanoTime();
-        long nanoDelta = afterNano - beforeNano;
-        System.out.println("It took " + (nanoDelta / 1000000.0) + " milliseconds");
+        double deltaInSeconds = ( (afterNano - beforeNano) / 1000000.0 ) / 1000;
 
+        System.out.println("Found " + result + " primes in randomly generated numbers");
+        System.out.println("It took " + deltaInSeconds + " seconds");
     }
 
 }
